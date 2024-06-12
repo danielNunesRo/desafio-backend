@@ -1,5 +1,9 @@
 package com.danielnunesro.backend.repositories;
 
-public class TransactionRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.danielnunesro.backend.entities.Transactions;
+
+public interface TransactionRepository extends JpaRepository<Transactions, Long> {
 
 }
