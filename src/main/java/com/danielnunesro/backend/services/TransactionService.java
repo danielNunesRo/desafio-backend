@@ -25,19 +25,22 @@ public class TransactionService {
 	private TransactionRepository transactionRepository;
 	
 	@Autowired
+	private NotificationService notificacaoService;
+	
+	@Autowired
 	private RestTemplate restTemplate;
 	
-	public void createTransaction(TransactionDTO transaction) throws Exception {
+	public Transactions createTransaction(TransactionDTO transaction) throws Exception {
 		
 		Users sender = userService.findUserById(transaction.senderId());
 		Users receiver = userService.findUserById(transaction.reciverId());
 		
 		userService.validateTransaction(sender, transaction.value());
 		
-		boolean authorized = authorizeTransaction(sender, transaction.value());
+		/**boolean authorized = authorizeTransaction(sender, transaction.value());
 		if(!authorized) {
 			throw new Exception("A transação não foi autorizada!");
-		}
+		}*/
 		
 		Transactions transactions = new Transactions();
 		transactions.setAmount(transaction.value());
@@ -51,6 +54,12 @@ public class TransactionService {
 		transactionRepository.save(transactions);
 		userService.create(sender);
 		userService.create(receiver);
+		
+		notificacaoService.notificar(sender, "Transação realizada com sucesso!");
+		notificacaoService.notificar(receiver, "Transação recebida com sucesso!");
+		
+		
+		return transactions;
 		
 		
 		

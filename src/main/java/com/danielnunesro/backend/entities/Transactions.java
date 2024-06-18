@@ -26,6 +26,7 @@ public class Transactions implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="sender_id")
 	private Users sender;
+	
 	@ManyToOne
 	@JoinColumn(name="receiver_id")
 	private Users receiver;
