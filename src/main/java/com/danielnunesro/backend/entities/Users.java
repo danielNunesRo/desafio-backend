@@ -3,6 +3,8 @@ package com.danielnunesro.backend.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import com.danielnunesro.backend.dtos.UserDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -54,6 +56,16 @@ public class Users implements Serializable {
 		this.password = password;
 		this.balance = balance;
 		this.userType = userType;
+	}
+	
+	public Users(UserDTO user) {
+		this.name = user.firstName();
+		this.lastname = user.lastName();
+		this.balance = user.balance();
+		this.userType = user.userType();
+		this.password = user.password();
+		this.email = user.email();
+		this.document = user.document();
 	}
 
 	public Long getId() {
